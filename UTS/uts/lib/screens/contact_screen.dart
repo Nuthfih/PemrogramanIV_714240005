@@ -213,7 +213,8 @@ class _ContactScreenState extends State<ContactScreen> {
     FocusScope.of(context).unfocus();
     try {
       final PlatformFile? result = await FilePicker.pickFile(
-        type: FileType.any,
+        type: FileType.custom,
+        allowedExtensions: ['jpg', 'jpeg', 'png'],
       );
 
       if (result == null) {
@@ -225,6 +226,14 @@ class _ContactScreenState extends State<ContactScreen> {
           .toLowerCase();
       final bool isPreviewImage =
           extension == 'jpg' || extension == 'jpeg' || extension == 'png';
+
+      if (!isPreviewImage) {
+        _showCyberSnackBar(
+          'Hanya berkas gambar JPG, JPEG, atau PNG yang diperbolehkan.',
+          isError: true,
+        );
+        return;
+      }
 
       Uint8List? fileBytes;
       String? usablePath = result.path;
@@ -870,7 +879,7 @@ class _ContactScreenState extends State<ContactScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          'Pick Files (Berkas Gambar / Dokumen)',
+          'Pick Files (Berkas Gambar: JPG, JPEG, PNG)',
           style: TextStyle(
             fontSize: 13,
             fontWeight: FontWeight.w700,
