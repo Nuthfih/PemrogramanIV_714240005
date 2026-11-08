@@ -24,7 +24,6 @@ class HomeScreen extends StatelessWidget {
     final int imageContacts = contacts
         .where((ContactModel c) => c.file.isImageExtension)
         .length;
-    final int docContacts = totalContacts - imageContacts;
 
     return SingleChildScrollView(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 28),
@@ -64,15 +63,6 @@ class HomeScreen extends StatelessWidget {
                   value: '$imageContacts',
                   icon: Icons.image_outlined,
                   accentColor: CyberColors.neonCyan,
-                ),
-              ),
-              const SizedBox(width: 10),
-              Expanded(
-                child: _StatTile(
-                  label: 'DOKUMEN LAIN',
-                  value: '$docContacts',
-                  icon: Icons.insert_drive_file_outlined,
-                  accentColor: CyberColors.neonPurple,
                 ),
               ),
             ],
